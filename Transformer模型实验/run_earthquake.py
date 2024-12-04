@@ -6,6 +6,7 @@ from time import time
 from tqdm import tqdm
 import os
 import numpy as np
+# 在 Python 3.3+ 中，支持“隐式命名空间包”（PEP 420）。这意味着，即使目录中没有 __init__.py 文件，只要该目录在 sys.path 中，它都可以被当作包的一部分。这就是为什么你可以直接导入 module 下的模块。
 from module.transformer import Transformer
 from module.loss import Myloss
 # from utils.random_seed import setup_seed

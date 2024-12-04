@@ -7,9 +7,11 @@ import torch
 import numpy as np
 from sklearn.cluster import KMeans
 import random
+# import 只能用绝对导入不能import .Augmentation as aug
+from . import Augmentation as aug
 from datetime import datetime
-from utils.random_seed import setup_seed
-import dataset_process.Augmentation as aug
+from ..utils.random_seed import setup_seed
+
 
 
 class MyDataset(Dataset):

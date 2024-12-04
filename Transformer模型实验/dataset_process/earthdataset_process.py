@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 import random
 from datetime import datetime
-from utils.random_seed import setup_seed
+from ..utils.random_seed import setup_seed
 
 
 
