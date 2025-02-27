@@ -131,7 +131,6 @@ pip install torch numpy pandas scikit-learn seaborn matplotlib folium
 Si vous souhaitez en savoir plus sur les détails techniques et théoriques derrière ce projet, vous pouvez consulter l'article suivant : [Lire l'article ici](https://drive.google.com/file/d/1Ev51Qw1txSkjH7OhbzFTypYUKFZ4OkxN/view?usp=drive_link)
 
 
-
-
+Si vous souhaitez obtenir les données utilisées dans le projet, veuillez cliquer ici:[Obtenir les données ici](https://drive.google.com/drive/folders/1nicOJgUZ_VURFw1weYCK69bnmhH7jzpB?usp=drive_link)
 
 
