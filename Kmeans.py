@@ -77,15 +77,14 @@ from scipy.spatial import ConvexHull
 # # km.n_iter_						# 运行的迭代次数
 # plt.show()
 
-# 地震区域分块
+######### 地震区域分块 #########
 # # 设置超参数
 N_CLUSTERS = 9                              # 类簇的数量
 MARKERS = ['*', 'v', '+', '^', 's', 'x', 'o','<','>']      # 标记样式（绘图）
 COLORS = ['pink', 'g', 'm', 'c', 'y', 'b', 'orange','k','yellow']  # 标记颜色（绘图）
 
-DATA_PATH = './data/China_cities.csv'              # 数据集路径
 # 海原 银川 临夏 高台
-centers = np.array([[105.61,36.51], [105.93,38.61], [103.2,35.6],[99.86,39.4]])
+centers_station = np.array([[105.61,36.51], [105.93,38.61], [103.2,35.6],[99.86,39.4]])
 
 
 df = pd.read_csv('./Data/Area1_3~10.csv',encoding = 'gb2312')
@@ -93,7 +92,7 @@ x= df[['纬度(°)','经度(°)']]
 x_np = np.array(x)        # 将x转化为numpy数组
 print(df)
 #
-# 分块之前，利用SSE选择k
+######### 分块之前，利用SSE选择k  ##############
 # 手肘法的核心指标是SSE(sum of the squared errors，误差平方和)，SSE是所有样本的聚类误差，代表了聚类效果的好坏。
 SSE = []  # 存放每次结果的误差平方和
 class_dis=[]
@@ -134,140 +133,127 @@ plt.xlabel('k')
 plt.ylabel('davies_score')
 plt.plot(X,db_score)
 plt.show()
-#
-# # 模型构建
-# model = KMeans(N_CLUSTERS,random_state=2)      # 构建聚类器
-# model.fit(x)                    # 训练聚类器
-#
-# labels = model.labels_      # 获取聚类标签
-# print('聚类标签',labels,len(labels),type(labels))
-#
-# unique,count=np.unique(labels,return_counts=True)
-# data_count=dict(zip(unique,count))
-# print('各类别出现个数:',data_count)
-# #
-# # # 轮廓系数（Silhouette Coefficient）是一种评价聚类效果的方法，其值介于[-1,1]之间，值越趋近于1代表同簇点的内聚度和异簇点的分离度都相对较优。
-# # print('获取所有样本的轮廓系数',silhouette_samples(x, labels))  # 获取所有样本的轮廓系数
-# # # 将所有点的轮廓系数求平均，就能得到该聚类结果总的轮廓系数
-# # print('获取聚类结果总的轮廓系数',silhouette_score(x, labels))      # 获取聚类结果总的轮廓系数
-# # print('输出类簇中心如下\n',model.cluster_centers_)	# 输出类簇中心
-# # # 输出各簇内元素
-# # for i in range(N_CLUSTERS):
-# #     print(f" CLUSTER-{i+1} ".center(60, '='))
-# #     print(df[labels == i])
-#
-#
-# # 可视化
-# fig,ax=plt.subplots()
-# plt.title("Earthquakes in Area1", fontsize=22)
-# plt.xlabel('East Longitude', fontsize=18)
-# plt.ylabel('North Latitude', fontsize=18)
-#
-# p_list=[]
-# for i in range(N_CLUSTERS):
-#     members = labels == i      # members是一个布尔型数组
-#     p=ax.scatter(
-#         x_np[members, 1],      # 城市经度数组
-#         x_np[members, 0],      # 城市纬度数组
-#         marker = MARKERS[i],   # 标记样式
-#         c = COLORS[i]          # 标记颜色
-#     )   # 绘制散点图
-#     p_list.append(p)
-#
-# ax.scatter(centers[:,0],centers[:,1],c='red',s=150,alpha=0.8)
-# plt.grid()
-# plt.legend(handles=p_list, labels=['zone0', 'zone1','zone2','zone3','zone4','zone5','zone6','zone7','zone8'], loc='best')
-#
-# color=['blue','red','green','pink']
-# def detection(angle,center,index):
-#     ang=90-angle
-#     detect_len = 2
-#     detect_x = detect_len * math.cos( ang/ 180 * math.pi)
-#     detect_y = detect_len * math.sin(ang/ 180 * math.pi)
-#     detect_dir1 = np.array([center[0] + detect_x, center[1] + detect_y])
-#     ax.scatter(detect_dir1[0], detect_dir1[1], c=color[index], s=20)
-#     ang1=ang-22.5
-#     ang2=ang1+45
-#     semicircle = Wedge((center[0], center[1]), 2, ang1,ang2,alpha=0.3,color=color[index])
-#     ax.add_patch(semicircle)
-#
-# def disposer(start_angle,center):
-#     # 画各个方向的范围图以及方向中心点
-#     for i in range(8):
-#         detection(start_angle+45*i,center,i%4)
-#
-# disposer(111,centers[0])
-# # disposer(40,centers[1])
-# # disposer(92,centers[2])
-# # disposer(295,centers[3])
-# #设置xy轴等长，否则不圆
-# plt.axis('equal')
-# plt.show()
-#
-#
-#
-# # # 随机生成范围内的经纬度点
-# # points=[]
-# # for a in range(0,1000):
-# #     lat = random.uniform(33, 41)
-# #     lng = random.uniform(96, 107)
-# #     point = (lng, lat)
-# #     p=np.array(point)
-# #     if a==0:
-# #         points=p
-# #         continue
-# #     points=np.vstack((points, p))
-# # print('随机生成的经纬点',points)
-# # model.fit(points)
-# # labels = model.labels_      # 获取聚类标签
-# # print('随机点的聚类标签',labels,len(labels))
-#
-#
-#
-# # 检验点的区域
-# indexer = np.argwhere(x_np==np.array([40.24,97.85
-# ]))
-# ind=indexer[:,0]
-# print(ind,type(ind))
-# indexe=np.argmax(np.bincount(ind))
-# print('当前点标签为',labels[indexe])
-# print('索引为',indexe,x_np[indexe])
-#
-# # 检验点的区域
-# indexer = np.argwhere(x_np==np.array([33.01,96.99
-# ]))
-# ind=indexer[:,0]
-# print(ind,type(ind))
-# indexe=np.argmax(np.bincount(ind))
-# print('当前点标签为',labels[indexe])
-# print('索引为',indexe,x_np[indexe])
-#
-# # 检验点的区域
-# indexer = np.argwhere(x_np==np.array([33.29,96.2
-# ]))
-# ind=indexer[:,0]
-# print(ind,type(ind))
-# indexe=np.argmax(np.bincount(ind))
-# print('当前点标签为',labels[indexe])
-# print('索引为',indexe,x_np[indexe])
-#
-# # 检验点的区域
-# indexer = np.argwhere(x_np==np.array([38.27,106.2
-# ]))
-# ind=indexer[:,0]
-# print(ind,type(ind))
-# indexe=np.argmax(np.bincount(ind))
-# print('当前点标签为',labels[indexe])
-# print('索引为',indexe,x_np[indexe])
 
+######## 确定K后进行kmeans分区 ########
+model = KMeans(N_CLUSTERS,random_state=2)      # 构建聚类器
+model.fit(x)                    # 训练聚类器
+
+labels = model.labels_      # 获取聚类标签
+print('聚类标签',labels,len(labels),type(labels))
+
+unique,count=np.unique(labels,return_counts=True)
+data_count=dict(zip(unique,count))
+print('各类别出现个数:',data_count)
+
+# 轮廓系数（Silhouette Coefficient）是一种评价聚类效果的方法，其值介于[-1,1]之间，值越趋近于1代表同簇点的内聚度和异簇点的分离度都相对较优。
+print('获取所有样本的轮廓系数',silhouette_samples(x, labels))  # 获取所有样本的轮廓系数
+# 将所有点的轮廓系数求平均，就能得到该聚类结果总的轮廓系数
+print('获取聚类结果总的轮廓系数',silhouette_score(x, labels))      # 获取聚类结果总的轮廓系数
+print('输出类簇中心如下\n',model.cluster_centers_)	# 输出类簇中心
+# 输出各簇内元素
+for i in range(N_CLUSTERS):
+    print(f" CLUSTER-{i+1} ".center(60, '='))
+    print(df[labels == i])
+
+
+# 可视化
+fig,ax=plt.subplots()
+plt.title("Earthquakes in Area1", fontsize=22)
+plt.xlabel('East Longitude', fontsize=18)
+plt.ylabel('North Latitude', fontsize=18)
+
+p_list=[]
+for i in range(N_CLUSTERS):
+    members = labels == i      # members是一个布尔型数组
+    p=ax.scatter(
+        x_np[members, 1],      # 城市经度数组
+        x_np[members, 0],      # 城市纬度数组
+        marker = MARKERS[i],   # 标记样式
+        c = COLORS[i]          # 标记颜色
+    )   # 绘制散点图
+    p_list.append(p)
+
+ax.scatter(centers_station[:,0],centers_station[:,1],c='red',s=150,alpha=0.8)
+plt.grid()
+plt.legend(handles=p_list, labels=['zone0', 'zone1','zone2','zone3','zone4','zone5','zone6','zone7','zone8'], loc='best')
+
+color=['blue','red','green','pink']
+def detection(angle,center,index):
+    ang=90-angle
+    detect_len = 2
+    detect_x = detect_len * math.cos( ang/ 180 * math.pi)
+    detect_y = detect_len * math.sin(ang/ 180 * math.pi)
+    detect_dir1 = np.array([center[0] + detect_x, center[1] + detect_y])
+    ax.scatter(detect_dir1[0], detect_dir1[1], c=color[index], s=20)
+    ang1=ang-22.5
+    ang2=ang1+45
+    semicircle = Wedge((center[0], center[1]), 2, ang1,ang2,alpha=0.3,color=color[index])
+    ax.add_patch(semicircle)
+
+def disposer(start_angle,center):
+    # 画各个方向的范围图以及方向中心点
+    for i in range(8):
+        detection(start_angle+45*i,center,i%4)
+
+disposer(111,centers_station[0])
+disposer(40,centers_station[1])
+disposer(92,centers_station[2])
+disposer(295,centers_station[3])
+#设置xy轴等长，否则不圆
+plt.axis('equal')
+plt.show()
+
+
+
+
+
+
+####### 手动输入点，检验该点所在kmeans分区的区域 ###############
+# 检验点的区域
+indexer = np.argwhere(x_np==np.array([40.24,97.85
+]))
+ind=indexer[:,0]
+print(ind,type(ind))
+indexe=np.argmax(np.bincount(ind))
+print('当前点标签为',labels[indexe])
+print('索引为',indexe,x_np[indexe])
+
+# 检验点的区域
+indexer = np.argwhere(x_np==np.array([33.01,96.99
+]))
+ind=indexer[:,0]
+print(ind,type(ind))
+indexe=np.argmax(np.bincount(ind))
+print('当前点标签为',labels[indexe])
+print('索引为',indexe,x_np[indexe])
+
+# 检验点的区域
+indexer = np.argwhere(x_np==np.array([33.29,96.2
+]))
+ind=indexer[:,0]
+print(ind,type(ind))
+indexe=np.argmax(np.bincount(ind))
+print('当前点标签为',labels[indexe])
+print('索引为',indexe,x_np[indexe])
+
+# 检验点的区域
+indexer = np.argwhere(x_np==np.array([38.27,106.2
+]))
+ind=indexer[:,0]
+print(ind,type(ind))
+indexe=np.argmax(np.bincount(ind))
+print('当前点标签为',labels[indexe])
+print('索引为',indexe,x_np[indexe])
+
+#######
+plt.figure(1)
 arr=x_np
 hull = ConvexHull(arr)  ###计算外接凸图案的边界点
+# 绘制原始数据点
 plt.plot(arr[:,0], arr[:,1], 'o')
-# plot convex hull polygon
-plt.plot(arr[hull.vertices,0], arr[hull.vertices,1], 'r ', lw=4)
-# plot convex full vertices
+# 让凸包边界闭合
 hull1=hull.vertices.tolist()
 hull1.append(hull1[0])
-# plt.plot(points[hull.vertices[0],0], points[hull.vertices[0],1], 'ro')
+# 绘制凸包（红色虚线 + 三角形标记） hull1 是 hull.vertices 形成的索引列表。hull1.append(hull1[0]) 将第一个点添加到最后，以确保画出的边界是封闭的。
 plt.plot(arr[hull1,0], arr[hull1,1], 'r--^',lw=2)
 plt.show()

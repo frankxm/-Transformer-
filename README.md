@@ -3,7 +3,34 @@
 
 ## Introduction du projet
 
-Parmi les divers événements d'urgence, les tremblements de terre sont les plus connus, se caractérisant par leur portée globale, leur complexité et leur soudaineté. Pour prédire l'orientation des tremblements de terre, des méthodes telles que l'utilisation de piézomètres de haute précision sont couramment employées, permettant d'analyser les variations des données de contrainte avant le séisme. Ce travail propose une approche différente, utilisant le modèle Transformer pour capturer les informations temporelles et spatiales des données multidimensionnelles. Un modèle optimal de prédiction de l'orientation des tremblements de terre est ensuite formé, et une interface utilisateur est conçue pour la visualisation des résultats à l'aide de Tkinter.
+Parmi les divers événements d'urgence, les tremblements de terre sont les plus connus, se caractérisant par leur portée globale, leur complexité et leur soudaineté. Pour prédire l'orientation des tremblements de terre, des méthodes telles que l'utilisation de piézomètres de haute précision sont couramment employées, permettant d'analyser les variations des données de contrainte avant le séisme. 
+
+Ce travail propose une approche différente, utilisant le **modèle Transformer** pour capturer les informations temporelles et spatiales des données multidimensionnelles. Un modèle optimal de prédiction de l'orientation des tremblements de terre est ensuite formé, et une **interface utilisateur** est conçue pour la visualisation des résultats à l'aide de **Tkinter**.
+
+
+
+## **Données des Stations Sismiques**
+
+Les données utilisées proviennent de **quatre stations sismiques du nord** :
+- **Station Haiyuan**
+- **Station Linxia**
+- **Station Gaotai**
+- **Station Linchuan**
+
+<p align="center">
+  <img src="images_demo/map_station.png" alt="Carte des Stations Sismiques" width="90%">
+</p>
+
+## **Résultats : Prédiction de l'Orientation des Séismes de Transformer**
+
+La prédiction de l'orientation des séismes est réalisée à partir des données de contrainte.
+
+<p align="center">
+  <img src="images_demo/prediction_map.png" alt="Carte de Prédiction" width="90%">
+</p>
+
+
+
 
 
 ## Description des fichiers
@@ -24,6 +51,11 @@ Ce fichier analyse et visualise la répartition des zones sismiques à partir de
 
 Le fichier génère des visualisations, telles que des courbes SSE, des diagrammes de clusters, et des cartes de dispersion avec les centres des clusters. De plus, il permet de vérifier les étiquettes des points spécifiques et de tracer l'enveloppe convexe des points pour délimiter les zones analysées.
 
+
+<p align="center">
+  <img src="images_demo/Kmeans_map.png" alt="Example Image1" width="100%">
+</p>
+
 ### `Machine_learning.py`
 Ce fichier permet de comparer un modèle d'apprentissage profond (Transformer) avec des méthodes d'apprentissage automatique. Les principales étapes incluent :
 - Lecture et prétraitement des données.
@@ -33,6 +65,11 @@ Ce fichier permet de comparer un modèle d'apprentissage profond (Transformer) a
 - Vérification des performances du modèle, avec des courbes de validation et de test.
 
 ### `Earthquake_gui.py`
+
+<p align="center">
+  <img src="images_demo/Interface.png" alt="Example Image1" width="100%">
+</p>
+
 #### Utilisation :
 1. **Étape 1** : Importez les fichiers de données de contrainte de la station, le catalogue des tremblements de terre et le fichier modèle. Si les données de contrainte sont sous format texte brut, elles sont prétraitées pour afficher des informations pertinentes telles que l'heure d'importation, le nom de la station, sa longitude, sa latitude, et le volume des données. De même, après l'importation du catalogue des tremblements de terre, les informations suivantes sont affichées : heure d'importation, zone de données, plages de longitude et de latitude, profondeur et détails du réseau sismique.
 2. **Étape 2** : Une fois les trois fichiers importés, vous pouvez cliquer sur le bouton de prédiction pour prédire les tremblements de terre. Les résultats seront affichés sur une carte interactive via Amap, avec la possibilité de visualiser les résultats à votre convenance.
@@ -40,6 +77,10 @@ Ce fichier permet de comparer un modèle d'apprentissage profond (Transformer) a
 ### `Zone_map.py`
 Ce fichier utilise la bibliothèque **Folium** pour créer une carte interactive. Il applique l'algorithme **KMeans** pour effectuer une analyse de clustering sur des données géographiques, créant ainsi une carte interactive qui visualise dynamiquement les différentes zones géographiques par clusters. Cette fonctionnalité est essentielle pour l'interface graphique (GUI).
 
+
+<p align="center">
+  <img src="images_demo/Zone_map.png" alt="Example Image1" width="50%">
+</p>
 ---
 
 ## Expérience du modèle Transformer
@@ -107,6 +148,18 @@ Ce fichier sert à **entraîner et valider le modèle Transformer** en réalisan
 
 L'objectif est d'obtenir le modèle optimal avec les meilleures performances.
 
+- **run_earthquake.py**:Entrainement de tache de double-classification
+
+- **run_earthquake3.py**:Ajout d'un suivi des indicateurs d'évaluation dans la tache multi-classification pendant l'entrainement
+
+
+
+- **run_earthquake2.py**:Exploration de lien entre batchsize et performance d'entrainement.
+
+
+
+- **run_earthquake4.py**:Exploration de lien entre optimizer et performance d'entrainement.
+
 ### `Run_with_saved_model.py`
 Ce fichier permet d'évaluer les performances d'un modèle Transformer pré-entraîné sur un jeu de données de test. Il génère des résultats sous forme de métriques et de graphiques visuels pour analyser la performance du modèle dans une tâche de classification multi-classes.
 
@@ -131,6 +184,22 @@ pip install torch numpy pandas scikit-learn seaborn matplotlib folium
 Si vous souhaitez en savoir plus sur les détails techniques et théoriques derrière ce projet, vous pouvez consulter l'article suivant : [Lire l'article ici](https://drive.google.com/file/d/1Ev51Qw1txSkjH7OhbzFTypYUKFZ4OkxN/view?usp=drive_link)
 
 
-Si vous souhaitez obtenir les données utilisées dans le projet, veuillez cliquer ici:[Obtenir les données ici](https://drive.google.com/drive/folders/1nicOJgUZ_VURFw1weYCK69bnmhH7jzpB?usp=drive_link)
+# Données d'utilisation
+## Normalisation de fichiers CSV
+
+- **haiyuan.csv** : Données de stress de séisme provenant de quatre directions de surveillance à la station Haiyuan.  
+  *( Les données originales de la station ne peuvent pas être fournies pour des raisons de confidentialité.)*  
+
+- **haiyuan_final.csv** : Données après prétraitement.  
+
+- **haiyuan_new.csv** : Données après l'ajout des caractéristiques supplémentaires :  
+  - Distance de la source sismique  
+  - Direction de la source sismique  
+
+## Accès aux données
+
+Si vous souhaitez obtenir les données utilisées dans le projet, cliquez sur le lien ci-dessous :  
+
+ [Obtenir les données ici](https://drive.google.com/drive/folders/1nicOJgUZ_VURFw1weYCK69bnmhH7jzpB?usp=drive_link)
 
 

@@ -330,8 +330,8 @@ class MainWindow:
         self.map_url='file:///C:/python_pycharm/Machine_learning/folium_map2.html'
         # 创建菜单栏并绑定相应事件函数
         self.main_menu = Menu(self.root)
-        self.main_menu.add_command(label="导入文件", command=lambda: self.upload_file())
-        self.main_menu.add_command(label="导入文本", command=lambda: self.upload_txt())
+        self.main_menu.add_command(label="导入csv文件", command=lambda: self.upload_file())
+        self.main_menu.add_command(label="导入txt文本", command=lambda: self.upload_txt())
         self.main_menu.add_command(label="导入模型", command=lambda: self.load_model())
         self.main_menu.add_command(label="查看结果", command=lambda: self.get_result2(self.map_url))
         self.main_menu.add_command(label="查看用法", command=lambda: self.watch_usage())
@@ -1251,7 +1251,7 @@ class MainWindow:
         plotmap1.save(f'folium_map{index+1}.html')
         flag = messagebox.askyesno(title="预测成功", message="需要查看结果吗")
         if flag:
-            url='file:///C:/python_pycharm/Machine_learning/'+f'folium_map{index+1}.html'
+            url='file:///D:/19130051014李云帆基于Transformer的地震方位预测/附件/'+f'folium_map{index+1}.html'
             self.get_result2(url)
 
 

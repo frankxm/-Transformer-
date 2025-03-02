@@ -111,7 +111,7 @@ def train():
     #                      optimizer_name=optimizer_name, LR=LR, pe=pe, mask=mask, val_loss=val_loss,
     #                      batch_times=batch_times, loss_list2=loss_list2,batch_val_times=batch_val_times,index=count)
 
-
+###### 探究batchsize对训练的影响 ##########
 if __name__ == '__main__':
     setup_seed(3047)  # 设置随机数种子
     reslut_figure_path = 'result_figure'  # 结果图像保存路径

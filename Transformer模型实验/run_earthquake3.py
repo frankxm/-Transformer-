@@ -416,7 +416,7 @@ def train():
     plt.tight_layout()
     plt.savefig(f'{reslut_figure_path}/ {BATCH_SIZE} {LR} indicaters.png')
     plt.show()
-
+#### 测试阶段评价指标更细化 ######
 if __name__ == '__main__':
     train()
 

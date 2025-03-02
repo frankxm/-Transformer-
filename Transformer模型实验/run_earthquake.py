@@ -421,7 +421,7 @@ def train():
     plt.tight_layout()
     # plt.savefig(f'{reslut_figure_path2}/ {BATCH_SIZE} {LR} indicaters.png')
     plt.show()
-
+### 探究二分类指标 ####
 if __name__ == '__main__':
     train()
 
